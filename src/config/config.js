@@ -1,6 +1,12 @@
 const dotenv = require('dotenv');
 
-const envFile = dotenv.config();
+let envFile;
+
+if (process.env.NODE_ENV === 'test') {
+  envFile = dotenv.config({ path: '.env.test' });
+} else {
+  envFile = dotenv.config();
+}
 
 if (!envFile) {
   throw new Error('.env not found');
