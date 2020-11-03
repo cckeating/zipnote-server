@@ -20,7 +20,7 @@ module.exports = ({ User, jwt, bcrypt }) => {
     });
 
     if (emailAlreadyExists) {
-      throwError('Failed to create new user', 409, 'Email is already in use');
+      throwError('Failed to create new user, email already in use', 409, 'Email is already in use');
     }
 
     const hashPassword = await bcrypt.hash(password, 12);

@@ -10,7 +10,7 @@ router.post(
   [
     body('firstName').trim().notEmpty(),
     body('lastName').trim().notEmpty(),
-    body('email').normalizeEmail().notEmpty(),
+    body('email').isEmail().notEmpty(),
     body('password').notEmpty(),
   ],
   validate,
@@ -19,7 +19,7 @@ router.post(
 
 router.post(
   '/login',
-  [body('email').normalizeEmail().trim().notEmpty(), body('password').notEmpty()],
+  [body('email').isEmail().trim().notEmpty(), body('password').notEmpty()],
   validate,
   controller.login
 );
