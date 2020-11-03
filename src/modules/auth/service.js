@@ -1,14 +1,10 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
 const throwError = require('../../util/error');
-const { User } = require('../../db/models');
 const config = require('../../config/config');
 
 /**
  * authService - Handles all things auth related
  *  */
-module.exports = () => {
+module.exports = ({ User, jwt, bcrypt }) => {
   /**
    * Sign up a new user to the system. Check if email already exists for this new user.
    * If a new email hash inputted password and save user data to database.

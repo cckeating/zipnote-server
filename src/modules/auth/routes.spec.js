@@ -4,7 +4,11 @@ const request = require('supertest');
 const faker = require('faker');
 const { expect } = require('chai');
 
-const authService = require('./service')();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const { User } = require('../../db/models');
+
+const authService = require('./service')({ User, jwt, bcrypt });
 
 const app = require('../../app');
 
