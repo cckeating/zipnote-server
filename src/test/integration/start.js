@@ -15,6 +15,8 @@ describe('REST API Integration Tests', () => {
   });
   require('../../modules/auth/routes.spec');
 
+  require('../../modules/notes/routes.spec');
+
   after(async () => {
     await sequelize.close();
   });

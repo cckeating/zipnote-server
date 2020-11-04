@@ -1,4 +1,7 @@
-const noteService = require('./service')();
+const { Note } = require('../../db/models');
+
+const FileService = require('../FileService')();
+const noteService = require('./service')({ Note, FileService });
 
 /**
  * POST method to create a note

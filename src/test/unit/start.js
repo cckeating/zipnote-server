@@ -3,4 +3,6 @@
 
 describe('Unit Testing', () => {
   require('../../modules/auth/service.spec');
+
+  require('../../modules/notes/service.spec');
 });
