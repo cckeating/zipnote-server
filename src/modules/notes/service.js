@@ -1,12 +1,11 @@
 const Sequelize = require('sequelize');
-const { writeFilePromise, readFilePromise, deleteFilePromise } = require('../../util/files');
-const { Note } = require('../../db/models');
 const throwError = require('../../util/error');
 
 /**
  * Note Service - Handles all things regarding notes
+ * @param {Note} Note - Database model of a Note
  *  */
-module.exports = () => {
+module.exports = ({ Note, FileService }) => {
   /**
    * Creates a new Note record in the database and writes the note data to a file.
    * @param {number} userId - ID of user that note will be assigned to
@@ -21,7 +20,7 @@ module.exports = () => {
       userId,
     });
 
-    await writeFilePromise(`data/${noteModel.id}.txt`, data);
+    await FileService.writeFile(`data/${noteModel.id}.txt`, data);
 
     return {
       id: noteModel.id,
@@ -40,11 +39,13 @@ module.exports = () => {
       where: { id: noteId, userId },
     });
 
+    // Note does not exist
     if (!note) {
       throwError('Note not found', 404, 'Failed to find note by this ID');
     }
 
-    const noteData = await readFilePromise(`data/${note.id}.txt`);
+    // Get note body data
+    const noteData = await FileService.readFile(`data/${note.id}.txt`);
 
     return {
       ...note.toJSON(),
@@ -115,7 +116,7 @@ module.exports = () => {
       updatedAt: new Date(),
     });
 
-    await writeFilePromise(`data/${noteRecord.id}.txt`, data);
+    await FileService.writeFile(`data/${noteRecord.id}.txt`, data);
 
     return {
       id: noteId,
@@ -141,7 +142,7 @@ module.exports = () => {
       throwError('Failed to remove note', 404, 'Note with this ID could not be deleted');
     }
 
-    await deleteFilePromise(`data/${noteId}.txt`);
+    await FileService.deleteFile(`data/${noteId}.txt`);
 
     return true;
   }

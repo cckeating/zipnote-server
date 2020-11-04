@@ -1,14 +1,13 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
 const throwError = require('../../util/error');
-const { User } = require('../../db/models');
 const config = require('../../config/config');
 
 /**
  * authService - Handles all things auth related
+ * @param {User} User - Database model of a User.
+ * @param {jwt} jwt - jwt library used for creating jsonwebtokens
+ * @param {bcrypt} bcrypt - bcrypt library used for hashing and comparing passwords
  *  */
-module.exports = () => {
+module.exports = ({ User, jwt, bcrypt }) => {
   /**
    * Sign up a new user to the system. Check if email already exists for this new user.
    * If a new email hash inputted password and save user data to database.
@@ -24,7 +23,7 @@ module.exports = () => {
     });
 
     if (emailAlreadyExists) {
-      throwError('Failed to create new user', 409, 'Email is already in use');
+      throwError('Failed to create new user, email already in use', 409, 'Email is already in use');
     }
 
     const hashPassword = await bcrypt.hash(password, 12);

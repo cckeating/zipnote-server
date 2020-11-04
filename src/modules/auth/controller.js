@@ -1,4 +1,8 @@
-const authService = require('./service')();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const { User } = require('../../db/models');
+
+const authService = require('./service')({ User, bcrypt, jwt });
 
 /**
  * POST method to signup to system
