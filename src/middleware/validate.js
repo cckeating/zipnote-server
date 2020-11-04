@@ -1,5 +1,9 @@
 const { validationResult } = require('express-validator');
 
+/**
+ * Validation middleware. Checks to see if there was any errors with the request
+ *
+ *  */
 module.exports = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

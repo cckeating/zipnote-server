@@ -3,6 +3,9 @@ const config = require('../../config/config');
 
 /**
  * authService - Handles all things auth related
+ * @param {User} User - Database model of a User.
+ * @param {jwt} jwt - jwt library used for creating jsonwebtokens
+ * @param {bcrypt} bcrypt - bcrypt library used for hashing and comparing passwords
  *  */
 module.exports = ({ User, jwt, bcrypt }) => {
   /**
